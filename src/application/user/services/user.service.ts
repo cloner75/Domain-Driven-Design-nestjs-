@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { FindOneUserQueryHandler } from '../queries/handlers/find.one.user.handler';
+import { findOneUserQuery } from '../queries/find-one.user.query';
 
 @Injectable()
 export class UserService {
@@ -10,7 +10,7 @@ export class UserService {
   ) { }
 
   async findOneUser(id: string): Promise<any> {
-    return await this.queryBus.execute(new FindOneUserQueryHandler(id));
+    return await this.queryBus.execute(new findOneUserQuery(id));
   }
 
 }
