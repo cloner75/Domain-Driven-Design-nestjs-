@@ -4,11 +4,18 @@ import { UserService } from 'src/application/user/services/user.service';
 
 @Controller('user')
 export class UserController {
-  private readonly userService: UserService;
+  constructor(
+    private readonly userService: UserService,
+  ) { }
 
   @Get(':id')
-  findOne(@Param('id') id: string): string {
-    return `user - ${id}`;
+  async findOne(@Param('id') id: string): Promise<any> {
+    try {
+      const getUser = await this.userService.findOneUser(id);
+      return `user - ${id}`;
+    } catch (err) {
+      return `error : ${err.message}`;
+    }
   }
 
   @Get('/')
